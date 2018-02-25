@@ -10,7 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180224154817) do
+ActiveRecord::Schema.define(version: 20180225044307) do
+
+  create_table "genres", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "genre_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_name"], name: "index_genres_on_genre_name", unique: true
+  end
+
+  create_table "personality_analyzes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "user_data", null: false
+    t.index ["user_id"], name: "fk_rails_5e85d78d2e"
+  end
+
+  create_table "trait_genres", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "trait_id"
+    t.bigint "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "fk_rails_d96a4b4726"
+    t.index ["trait_id"], name: "fk_rails_755ccfcbd7"
+  end
+
+  create_table "traits", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "trait_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trait_name"], name: "index_traits_on_trait_name", unique: true
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "username", null: false
@@ -34,4 +65,7 @@ ActiveRecord::Schema.define(version: 20180224154817) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "personality_analyzes", "users"
+  add_foreign_key "trait_genres", "genres"
+  add_foreign_key "trait_genres", "traits"
 end

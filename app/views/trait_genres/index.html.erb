@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Trait Genres</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @trait_genres.each do |trait_genre| %>
+      <tr>
+        <td><%= trait_genre.trait.trait_name %></td>
+        <td><%= trait_genre.genre.genre_name %></td>
+        <td><%= link_to 'Show', trait_genre %></td>
+        <td><%= link_to 'Edit', edit_trait_genre_path(trait_genre) %></td>
+        <td><%= link_to 'Destroy', trait_genre, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Trait Genre', new_trait_genre_path %>

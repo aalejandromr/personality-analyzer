@@ -1,0 +1,17 @@
+<%= form_with(model: personality_analyze, local: true) do |form| %>
+  <% if personality_analyze.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(personality_analyze.errors.count, "error") %> prohibited this personality_analyze from being saved:</h2>
+
+      <ul>
+      <% personality_analyze.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

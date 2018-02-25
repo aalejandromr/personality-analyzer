@@ -1,1 +1,81 @@
-<p> Here </p>
+    <div class="row">
+    	<div class="col s14">
+    		<h2 class="header">Horizontal Card</h2>
+			    <div class="card medium horizontal">
+			      <div class="card-image">
+			        <img src="https://lorempixel.com/100/190/nature/6">
+			      </div>
+			      <div class="card-stacked">
+			        <div class="card-content">
+    					<canvas id="myChart" width="100%" height="100%"></canvas>
+			        </div>
+			     </div>
+			</div>
+    	</div>
+    	<div class="col s6">
+    		<% @top_albums.each do |ceroNivel| %>
+	    		<% ceroNivel.each do |primerNivel| %>
+	    			<h2> <%= primerNivel["albums"]["@attr"]["tag"] %> </h2>
+	    			<div class="row">
+	    			<% primerNivel["albums"]["album"].each do |segundoNivel| %>
+					        <div class="col s6 m6">
+					          <div class="card blue-grey darken-1">
+					            <div class="card-content white-text">
+					              <span class="card-title"> Album Name: <%= segundoNivel["name"]%> </span>
+					              <p>Artista: <%= segundoNivel["artist"]["name"] %></p>
+					            </div>
+					            <div class="card-action">
+					              <a href="#">This is a link</a>
+					              <a href="#">This is a link</a>
+					            </div>
+					          </div>
+					        </div>
+	    			<% end %>
+					</div>
+	    		<% end %>
+    		<% end %>
+    	</div>
+    </div>
+  		<%= javascript_tag do %>
+		   window.personality_names = JSON.parse('<%= raw @personality_names%>')
+		   window.personality_percent = JSON.parse('<%= raw @personality_percent%>')
+		<% end %>
+<script>
+	var ctx = document.getElementById("myChart").getContext('2d');
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: personality_names,
+	        datasets: [{
+	            label: 'Personality\'s Percent',
+	            data: personality_percent,
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true
+	                }
+	            }]
+	        }
+	    }
+	});
+	</script>

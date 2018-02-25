@@ -1,0 +1,20 @@
+<%= form_with(model: trait_genre, local: true) do |form| %>
+  <% if trait_genre.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(trait_genre.errors.count, "error") %> prohibited this trait_genre from being saved:</h2>
+
+      <ul>
+      <% trait_genre.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+   <%= form.select(:trait_id, Trait.all.collect {|u| [u.trait_name, u.id]}, :prompt => 'Select') %>
+   <%= form.select(:genre_id, Genre.all.collect {|u| [u.genre_name, u.id]}, :prompt => 'Select') %>
+
+   <%= form.submit %>
+  </div>
+<% end %>

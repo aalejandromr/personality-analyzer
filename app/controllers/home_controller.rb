@@ -17,7 +17,7 @@ class HomeController < ApplicationController
 		  string = "#{string} #{tweet.full_text}"
 		end
 
-		puts string
+		#puts string
 
 		#http.use_ssl = (uri.scheme == "https")
 		require 'net/http'
@@ -37,8 +37,79 @@ class HomeController < ApplicationController
 		  http.request(request)
 		end
 
-		render :json => response.body
+		#personalityAnalyze = PersonalityAnalyze.new
+		#personalityAnalyze.user_id = current_user.id
+		#personalityAnalyze.user_data = string
+		#personalityAnalyze.save
+		@personality_names = Array.new
+		@personality_percent = Array.new
+		@genre_by_personality = Array.new
+		@top_albums = Array.new
+		data = JSON.parse(response.body)
+		doItRandomly = true
+		data["personality"].sort_by{|e| -e["percentile"]}.each do |person|
+			temp = {}
+			temp2 = {}
+			temp = person["name"]
+			temp2 = person["percentile"] * 100
+			if temp2 > 50.00
+				doItRandomly = false
+			end
+			@personality_names << temp
+			@personality_percent << temp2
+		end
+		@numbers = Array.new
+		@randomly = Array.new
+		#render :json => rand(0...@personality_names.length - 1)
+		begining = 1
+		ending = 3
+		if doItRandomly
+					while begining < ending
+						num = rand(0...@personality_names.length - 1)
+						if @numbers.include? num
+			 				
+			 			else
+			 				@numbers << num
+						end
+						if @numbers.length > 2
+							begining +=1
+						end
+					end
+					@personality_names.each.with_index do |personality_name, index|
+					if @numbers.include? index				
+							temp = {}
+							tempArray = Array.new
+							#temp["tag"] = personality_name
+							temp2 = TraitGenre.get_genre_names_by_trait(personality_name)
+							temp2.each do |testing| 
+								testing.each do |testing2| 
+									tempArray << LastFM::Tag.get_top_albums(:tag => "#{testing2.genre.genre_name}", :limit => 6)
+								end
+							end
+							#tempArray << temp
+							@top_albums << tempArray
+						end
+					end
+		else
+			@personality_names.each do |personality_name|
+				temp = {}
+				tempArray = Array.new
+				#temp["tag"] = personality_name
+				temp2 = TraitGenre.get_genre_names_by_trait(personality_name)
+				temp2.each do |testing| 
+					testing.each do |testing2| 
+						tempArray << LastFM::Tag.get_top_albums(:tag => "#{testing2.genre.genre_name}", :limit => 6)
+					end
+				end
+				#tempArray << temp
+				@top_albums << tempArray
+			end
+		end
 
+		#render :json => @top_albums
+
+		#render :json => @top_albums
+		
 	end
 
 
