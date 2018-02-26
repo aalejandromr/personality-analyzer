@@ -50,7 +50,9 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  adapter: postgresql
   database: PersonalityAnalyzer_production
+  pool: 5
+  timeout: 5000
   username: PersonalityAnalyzer
   password: <%= ENV['PERSONALITYANALYZER_DATABASE_PASSWORD'] %>
