@@ -5,10 +5,10 @@ class HomeController < ApplicationController
 		require 'net/http'
 		#To Add Twitter's User information
 		client = Twitter::REST::Client.new do |config|
-		  config.consumer_key        = "51ECpPKIfeUbkzw4nX7muME9I"
-		  config.consumer_secret     = "pqTcPcnYnslXIEfYWqcbQzNexSWDXxa0qxEgt60pBRK6WLXmi1"
-		  config.access_token        = "730590069178785793-g8qDJidKvJO1KnrZLOdqDREkw9ihDKl"
-		  config.access_token_secret = "GSo5nACbN55a0wnvcaCMoMx4SsWqY8lthk0XsJTWff8uQ"
+		  config.consumer_key        = Rails.application.secrets.twitter_consumer_key
+		  config.consumer_secret     = Rails.application.secrets.twitter_consumer_secret
+		  config.access_token        = Rails.application.secrets.twitter_access_token
+		  config.access_token_secret = Rails.application.secrets.twitter_access_token_secret
 		end
 			
 		tweets = client.user_timeline(current_user.username, count: 40)
