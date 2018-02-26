@@ -9,3 +9,8 @@ To setup the project, you need to:
 	rails server -e development
 
 	and you are running this app locally :)
+
+
+	Info:
+		Ruby 2.4.0
+		Rails 5.1.5
