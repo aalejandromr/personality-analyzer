@@ -50,6 +50,6 @@ test:
 #
 production:
   <<: *default
-  database: PersonalityAnalyzer_development
+  database: PersonalityAnalyzer_production
   username: root
   password: root
