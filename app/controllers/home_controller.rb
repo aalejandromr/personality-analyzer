@@ -37,10 +37,10 @@ class HomeController < ApplicationController
 		  http.request(request)
 		end
 
-		#personalityAnalyze = PersonalityAnalyze.new
-		#personalityAnalyze.user_id = current_user.id
-		#personalityAnalyze.user_data = string
-		#personalityAnalyze.save
+		personalityAnalyze = PersonalityAnalyze.new
+		personalityAnalyze.user_id = current_user.id
+		personalityAnalyze.user_data = string
+		personalityAnalyze.save
 		@personality_names = Array.new
 		@personality_percent = Array.new
 		@genre_by_personality = Array.new

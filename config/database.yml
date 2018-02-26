@@ -11,13 +11,13 @@
 #
 
 default: &default
-  adapter: mysql2
   encoding: utf8
   pool: 5
   socket: /tmp/mysql.sock
 
 development:
   <<: *default
+  adapter: mysql2
   username: root
   password: root
   database: PersonalityAnalyzer_development
